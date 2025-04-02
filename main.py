@@ -32,7 +32,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     logging.info(f'{bot.user} is online!')
 
-ef run_web_server():
+def run_web_server():
     app.run(host='0.0.0.0', port=10000)
 
 # Start the Flask web server in a separate thread
