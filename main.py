@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def wake():
-    return "Ping received! The bot is waking up—please wait a minute for it to become fully active."
+    return "I am awake!"
     
 # Retrieve the Discord token from the environment
 token = os.getenv("TOKEN")
