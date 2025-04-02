@@ -9,13 +9,16 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 from helpers import send_chunks
+
 # Create the Flask app for the web interface
 app = Flask(__name__)
 
 @app.route('/')
 def wake():
     return "Bot is awake!"
-
+# Retrieve the Discord token from the environment
+token = os.getenv("TOKEN")
+logging.info(f"Token loaded: {bool(token)}")  # Should print True if your token is loaded
 
 # Set up intents. Enable message_content if needed.
 intents = discord.Intents.default()
