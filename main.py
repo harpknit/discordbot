@@ -1,3 +1,5 @@
+from flask import Flask
+from threading import Thread
 import os
 import asyncio
 import discord
@@ -7,14 +9,13 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 from helpers import send_chunks
-logging.basicConfig(level=logging.INFO)
+# Create the Flask app for the web interface
+app = Flask(__name__)
 
-logging.info("Starting main.py...")
-load_dotenv()  # Load .env variables
+@app.route('/')
+def wake():
+    return "Bot is awake!"
 
-# Check if TOKEN is loaded
-token = os.getenv("TOKEN")
-logging.info(f"Token loaded: {bool(token)}")# Should print True if your token is loaded
 
 # Set up intents. Enable message_content if needed.
 intents = discord.Intents.default()
