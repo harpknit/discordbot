@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def wake():
-    return "Bot is awake!"
+    return "Ping received! The bot is waking up—please wait a minute for it to become fully active."
 # Retrieve the Discord token from the environment
 token = os.getenv("TOKEN")
 logging.info(f"Token loaded: {bool(token)}")  # Should print True if your token is loaded
