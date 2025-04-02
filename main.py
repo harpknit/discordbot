@@ -32,6 +32,20 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     logging.info(f'{bot.user} is online!')
 
+ef run_web_server():
+    app.run(host='0.0.0.0', port=10000)
+
+# Start the Flask web server in a separate thread
+web_thread = Thread(target=run_web_server)
+web_thread.start()
+
+async def main():
+    # Example: loading an extension if needed
+    logging.info("Loading extension: cogs.sync")
+    await bot.load_extension("cogs.sync")
+    logging.info("Starting bot...")
+    await bot.start(token)
+
 # Store designer channel per user for posting patters
 designer_by_user = {}
 
