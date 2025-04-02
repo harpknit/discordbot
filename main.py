@@ -15,6 +15,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def wake():
+    # Check if the bot is ready and not closed
+    if not bot.is_closed():
+        # Replace YOUR_CHANNEL_ID with the channel's numeric ID
+        channel = bot.get_channel(1354854476275650785)
+        if channel:
+            # Schedule sending the message asynchronously on the bot's event loop
+            bot.loop.create_task(channel.send("Ping received! The bot is waking up—please wait a minute for it to become fully active."))
     return "Ping received! The bot is waking up—please wait a minute for it to become fully active."
 # Retrieve the Discord token from the environment
 token = os.getenv("TOKEN")
