@@ -151,6 +151,13 @@ async def on_message(message):
         if title:
             await forum_channel.create_thread(name=title, content=link)
             await message.channel.send(f"Posted: **{title}** in {channel_name}")
+          except discord.HTTPException as e:
+                if e.code == 40067:
+                    await message.channel.send("A tag is required to create a forum post in this channel. Please toggle that off to post.")
+                else:
+                    # Log other HTTP errors if necessary
+                    logging.info(f"HTTPException occurred: {e}")
+                    await message.channel.send(f"An error occurred: {e}")
         else:
             await message.channel.send(f"Could not fetch title for: {link}")
         await asyncio.sleep(0.5)
