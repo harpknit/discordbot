@@ -120,7 +120,7 @@ async def listalltags(ctx):
 
     await send_chunks(ctx, output)
 
-@bot.event
+@bot.event #posting on ravelry link
 async def on_message(message):
     await bot.process_commands(message)
     if message.author == bot.user:
@@ -139,9 +139,9 @@ async def on_message(message):
     if not links:
         return
 
-    forum_channel = discord.utils.get(message.guild.channels,
-                                      name=channel_name,
-                                      type=discord.ChannelType.forum)
+    forum_channel = discord.utils.get(
+        message.guild.channels, name=channel_name, type=discord.ChannelType.forum
+    )
     if not forum_channel:
         await message.channel.send(f"Forum channel **{channel_name}** not found.")
         return
@@ -149,14 +149,16 @@ async def on_message(message):
     for link in links:
         title = get_pattern_title(link, full=full_flag)
         if title:
-            await forum_channel.create_thread(name=title, content=link)
-            await message.channel.send(f"Posted: **{title}** in {channel_name}")
-          except discord.HTTPException as e:
-                if e.code == 40067:
-                    await message.channel.send("A tag is required to create a forum post in this channel. Please toggle that off to post.")
+            try:
+                await forum_channel.create_thread(name=title, content=link)
+                await message.channel.send(f"Posted: **{title}** in {channel_name}")
+            except Exception as e:
+                # Convert the exception to string and check if it contains the tag error message.
+                error_text = str(e)
+                if "A tag is required to create a forum post in this channel" in error_text:
+                    await message.channel.send("A tag is required to create a forum post in this channel")
                 else:
-                    # Log other HTTP errors if necessary
-                    logging.info(f"HTTPException occurred: {e}")
+                    logging.info(f"Exception occurred: {e}")
                     await message.channel.send(f"An error occurred: {e}")
         else:
             await message.channel.send(f"Could not fetch title for: {link}")
