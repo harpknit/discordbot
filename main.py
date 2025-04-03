@@ -98,7 +98,7 @@ async def setdesigner(ctx, *, designer):
         full_flag = True
         designer = " ".join(parts[:-1])
     designer_by_user[ctx.author.id] = {"channel": designer, "full": full_flag}
-    flag_msg = " with full details (keeping the 'by' section without the word 'pattern')" if full_flag else ""
+    flag_msg = " will include 'by [designer name]'" if full_flag else ""
     await ctx.send(f"Designer set to **{designer}** for you{flag_msg}.")
 
 @bot.command()
